@@ -3,11 +3,11 @@ using System.Collections;
 
 public class FrogCharacterController : MonoBehaviour {
 
-	public float jumpSpeed = 5.0f;
+	public float jumpSpeed = 500.0f;
 	public float jumpElevationAngleDeg = 45.0f;
-	public float maxSpeed = 5.0f;
+	public float maxSpeed = 500.0f;
+	public float jumpGroundClearance = 100.0f;
 
-	private float jumpGroundClearance = 2.0f;
 	private Rigidbody myRigidBody;
 	private Camera myCamera;
 
