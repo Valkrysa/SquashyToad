@@ -4,8 +4,8 @@ using System.Collections;
 public class VehicleSpawner : MonoBehaviour {
 
 	public GameObject[] spawnChoices;
-	public float spawnFrequencyMin = 1f;
-	public float spawnFrequencyMax = 4f;
+	public float meanSpawnTime = 4f;
+	public float minimumSpawnTime = 2f;
 
 	private float nextSpawnTime = 0f;
 
@@ -18,7 +18,7 @@ public class VehicleSpawner : MonoBehaviour {
 	void Update () {
 		if (Time.time > nextSpawnTime) {
 			Spawn ();
-			nextSpawnTime = Time.time + Random.Range(spawnFrequencyMin, spawnFrequencyMax);
+			nextSpawnTime = Time.time + minimumSpawnTime + ((-Mathf.Log (Random.value)) * meanSpawnTime);
 		}
 	}
 
