@@ -3,7 +3,7 @@ using System.Collections;
 
 public class FrogCharacterController : MonoBehaviour {
 
-	public float[] jumpSpeed = { 300, 700, 1000 };
+	public float[] jumpSpeed = { 300, 250, 250 };
 	public float jumpElevationAngleDeg = 45.0f;
 
 	private Rigidbody myRigidBody;
@@ -23,7 +23,7 @@ public class FrogCharacterController : MonoBehaviour {
 			hops = 0;
 		}
 		if (GvrViewer.Instance.Triggered) { 
-			hops++;
+			
 			if (hops < jumpSpeed.Length) {
 				Jump ();
 			}
@@ -49,6 +49,8 @@ public class FrogCharacterController : MonoBehaviour {
 		if (myRigidBody.velocity.magnitude > jumpSpeed[hops]) {
 			myRigidBody.velocity = myRigidBody.velocity.normalized * jumpSpeed[hops];
 		}
+
+		hops++;
 	}
 }
 	

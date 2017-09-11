@@ -27,7 +27,7 @@ public class LaneSpawner : MonoBehaviour {
 		int laneIndex = Random.Range (0, lanePrefabs.Length);
 
 		GameObject lane = Instantiate (lanePrefabs [laneIndex]);
-		lane.transform.parent = transform;
+		lane.transform.SetParent (transform, false);
 		lane.transform.Translate (0, 0, offset);
 	}
 }

@@ -18,6 +18,6 @@ public class VehicleMovement : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-		myRigidBody.MovePosition (transform.position - (Vector3.right * velocity) * Time.deltaTime);
+		myRigidBody.MovePosition (transform.position - (transform.right * velocity) * Time.deltaTime);
 	}
 }
