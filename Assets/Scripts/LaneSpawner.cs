@@ -1,12 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+enum LaneType { Safe, Danger };
+
 public class LaneSpawner : MonoBehaviour {
 
-	public GameObject[] lanePrefabs;
+	public GameObject[] dangerousLanes;
+	public GameObject[] safeLanes;
 	public int numberOfLanes = 10;
+	public float safeLaneRunProbability = 0.2f;
 
 	private int laneWidth = 1000;
+	private LaneType lastLaneType = LaneType.Safe;
 
 	// Use this for initialization
 	void Start () {
@@ -24,10 +29,27 @@ public class LaneSpawner : MonoBehaviour {
 	}
 
 	private void CreateRandomLane (float offset) {
-		int laneIndex = Random.Range (0, lanePrefabs.Length);
+		GameObject lane;
 
-		GameObject lane = Instantiate (lanePrefabs [laneIndex]);
+		if (lastLaneType == LaneType.Safe) {
+			if (Random.value <= safeLaneRunProbability) {
+				lane = InstantiateRandomLane (safeLanes);
+				lastLaneType = LaneType.Safe;
+			} else {
+				lane = InstantiateRandomLane (dangerousLanes);
+				lastLaneType = LaneType.Danger;
+			}
+		} else {
+			lane = InstantiateRandomLane (safeLanes);
+			lastLaneType = LaneType.Safe;
+		}
+
 		lane.transform.SetParent (transform, false);
 		lane.transform.Translate (0, 0, offset);
+	}
+
+	private GameObject InstantiateRandomLane(GameObject[] lanes) {
+		int laneIndex = Random.Range (0, lanes.Length);
+		return Instantiate (lanes [laneIndex]);
 	}
 }

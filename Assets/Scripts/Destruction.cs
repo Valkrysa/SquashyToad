@@ -14,6 +14,6 @@ public class Destruction : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		Destroy (other.gameObject);
+		Destroy (other.GetComponentInParent<Rigidbody>().gameObject);
 	}
 }
