@@ -5,6 +5,7 @@ enum LaneType { Safe, Danger };
 
 public class LaneSpawner : MonoBehaviour {
 
+	public GameObject player;
 	public GameObject[] dangerousLanes;
 	public GameObject[] safeLanes;
 	public int numberOfLanes = 10;
@@ -12,20 +13,23 @@ public class LaneSpawner : MonoBehaviour {
 
 	private int laneWidth = 1000;
 	private LaneType lastLaneType = LaneType.Safe;
+	private int offset = 0;
 
-	// Use this for initialization
-	void Start () {
-		float offset = 0f;
-		while (offset < (numberOfLanes * laneWidth)) {
+	void Update () {
+		int laneSpawnDistance = (numberOfLanes * laneWidth);
+		while (offset < (laneSpawnDistance + (int)player.transform.position.z)) {
 			CreateRandomLane(offset);
 
 			offset += laneWidth;
 		}
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+		foreach (Transform lane in transform) {
+			if (lane.gameObject.tag == "Lane") {
+				if (lane.position.z + laneSpawnDistance < player.transform.position.z) {
+					Destroy (lane.gameObject);
+				}
+			}
+		}
 	}
 
 	private void CreateRandomLane (float offset) {
